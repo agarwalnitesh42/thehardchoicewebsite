@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Hard Choice - Make Calm, Clear Choices</title>
     <style>
         :root {
-            --primary: #1E90FF;
-            --primary-dark: #187BCD;
-            --primary-light: rgba(30, 144, 255, 0.15);
-            --secondary: #A3E4D7;
-            --bg-light: #F5FAFD;
+            --primary: #4C6EF5;
+            --primary-dark: #3A56C5;
+            --primary-light: rgba(76, 110, 245, 0.15);
+            --secondary: #12CBCA;
+            --accent: #FF9E43;
+            --bg-light: #F7FAFF;
             --text-dark: #2C3E50;
             --text-medium: #4682B4;
             --text-light: #7F92A5;
@@ -40,7 +42,12 @@
         }
 
         /* Typography */
-        h1, h2, h3, h4, h5, h6 {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
             font-weight: 700;
             line-height: 1.3;
             color: var(--text-dark);
@@ -81,13 +88,13 @@
         .btn-primary {
             background: var(--primary);
             color: white;
-            box-shadow: 0 4px 14px rgba(30, 144, 255, 0.25);
+            box-shadow: 0 4px 14px rgba(76, 110, 245, 0.25);
         }
 
         .btn-primary:hover {
             background: var(--primary-dark);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(30, 144, 255, 0.35);
+            box-shadow: 0 6px 20px rgba(76, 110, 245, 0.35);
         }
 
         .btn-secondary {
@@ -146,7 +153,7 @@
             display: flex;
             align-items: center;
             font-weight: 700;
-            font-size: 24px;
+            font-size: 18px;
             color: var(--text-dark);
             text-decoration: none;
         }
@@ -200,16 +207,21 @@
         .feature-image {
             max-width: 100%;
             height: auto;
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(30, 144, 255, 0.3);
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(76, 110, 245, 0.25);
             background: rgba(224, 247, 255, 0.5);
             padding: 10px;
+            transition: transform 0.3s;
         }
-    
+
+        .feature-image:hover {
+            transform: scale(1.02);
+        }
+
         /* Hero Section */
         .hero {
             padding: 90px 0 100px;
-            background: linear-gradient(to bottom right, #FFFFFF, var(--bg-light));
+            background: linear-gradient(135deg, var(--bg-light), #F0F8FF);
             position: relative;
             overflow: hidden;
         }
@@ -227,25 +239,94 @@
         .hero-title {
             margin-bottom: 24px;
             line-height: 1.2;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
         }
 
         .hero-subtitle {
             font-size: 1.25rem;
             color: var(--text-medium);
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             font-weight: 400;
         }
 
         .hero-buttons {
             display: flex;
             gap: 16px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
+        }
+
+        .research-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 16px;
+            background: linear-gradient(90deg, var(--primary-light), rgba(18, 203, 202, 0.15));
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .research-badge i {
+            color: var(--primary);
+            font-size: 18px;
+        }
+
+        .research-panel {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--border-light);
+            position: relative;
+        }
+
+        .research-panel h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+        }
+
+        .research-list {
+            list-style: none;
+        }
+
+        .research-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed var(--border-light);
+        }
+
+        .research-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .research-item i {
+            color: var(--secondary);
+            font-size: 18px;
+            margin-top: 3px;
+        }
+
+        .research-item strong {
+            color: var(--text-dark);
+            margin-right: 5px;
         }
 
         .hero-badges {
             display: flex;
             gap: 20px;
-            margin-top: 40px;
+            margin-top: 30px;
         }
 
         .hero-badge {
@@ -282,6 +363,11 @@
             position: relative;
             padding: 6px;
             z-index: 2;
+            transition: transform 0.5s ease;
+        }
+
+        .phone-mockup:hover {
+            transform: translateY(-10px);
         }
 
         .hero-blob {
@@ -290,16 +376,26 @@
             height: 600px;
             background: linear-gradient(135deg, var(--secondary), var(--primary-light));
             border-radius: 50%;
-            opacity: 0.15;
+            opacity: 0.2;
             filter: blur(80px);
             z-index: 1;
             top: -200px;
             right: -200px;
+            animation: blob-float 10s ease-in-out infinite alternate;
+        }
+
+        @keyframes blob-float {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(-30px, 30px) scale(1.1);
+            }
         }
 
         /* Features Section */
         .features {
-            padding: 120px 0;
+            padding: 70px 0;
         }
 
         .section-header {
@@ -310,6 +406,11 @@
 
         .section-header h2 {
             margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
         }
 
         .section-header p {
@@ -335,6 +436,7 @@
         .feature-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-light);
         }
 
         .feature-icon {
@@ -354,6 +456,7 @@
             margin-bottom: 16px;
             font-size: 20px;
             margin-top: 20px;
+            color: var(--primary-dark);
         }
 
         .feature-card p {
@@ -364,8 +467,8 @@
 
         /* Testimonials Section */
         .testimonials {
-            padding: 50px 0;
-            background: var(--bg-light);
+            padding: 70px 0;
+            background: linear-gradient(135deg, var(--bg-light), rgba(18, 203, 202, 0.1));
         }
 
         .testimonials-container {
@@ -381,6 +484,7 @@
             box-shadow: var(--shadow-soft);
             max-width: 700px;
             text-align: center;
+            border-top: 4px solid var(--primary);
         }
 
         .testimonial-content {
@@ -409,6 +513,7 @@
             font-weight: 600;
             font-size: 18px;
             margin-bottom: 4px;
+            color: var(--primary-dark);
         }
 
         .author-position {
@@ -422,6 +527,34 @@
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: var(--secondary);
+            opacity: 0.1;
+            border-radius: 50%;
+            top: -200px;
+            left: -100px;
+            filter: blur(80px);
+        }
+
+        .cta::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: var(--accent);
+            opacity: 0.1;
+            border-radius: 50%;
+            bottom: -150px;
+            right: -50px;
+            filter: blur(80px);
         }
 
         .cta h2 {
@@ -492,7 +625,7 @@
         .footer-column h3 {
             font-size: 18px;
             margin-bottom: 24px;
-            color: var(--text-dark);
+            color: var(--primary-dark);
         }
 
         .footer-links {
@@ -511,6 +644,10 @@
 
         .footer-links a:hover {
             color: var(--primary);
+        }
+
+        img {
+            box-shadow: 0 0 15px rgba(76, 110, 245, 0.3);
         }
 
         .footer-bottom {
@@ -585,6 +722,16 @@
             .footer-grid {
                 grid-template-columns: 1fr 1fr;
             }
+
+            .research-badge {
+                margin: 0 auto 25px;
+                display: flex;
+                justify-content: center;
+            }
+
+            .research-panel {
+                text-align: left;
+            }
         }
 
         @media (max-width: 767px) {
@@ -596,7 +743,8 @@
                 font-size: 1.8rem;
             }
 
-            nav, .header-actions {
+            nav,
+            .header-actions {
                 display: none;
             }
 
@@ -675,6 +823,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Header -->
     <header>
@@ -683,20 +832,16 @@
                 <img src="./7-logo.png" alt="The Hard Choice App" class="logo-icon">
                 <span>The Hard Choice</span>
             </a>
-            <span>7 Steps to Bold Clarity</span>
-            
             <nav>
                 <ul>
                     <li><a href="#features">How It Works</a></li>
                     <li><a href="#testimonials">Stories</a></li>
-                    <li><a href="#blog">Blog</a></li>
-                    <li><a href="#support">Support</a></li>
                 </ul>
-            </nav>            
+            </nav>
             <button class="mobile-menu-btn">☰</button>
         </div>
     </header>
-    
+
     <!-- Mobile Menu -->
     <div class="mobile-menu">
         <button class="mobile-menu-close">✕</button>
@@ -709,26 +854,57 @@
             </ul>
         </nav>
     </div>
-    
+
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
                     <h1 class="hero-title">Embrace Peace in Every Risk Taking</h1>
-                    <p class="hero-subtitle">Let 7 gentle questions guide you to clarity, crafted from years of navigating life's challenges.</p>
+                    <p class="hero-subtitle">Let 7 gentle questions guide you to clarity, crafted from years of
+                        navigating life's challenges.</p>
+
+                    <div class="research-badge">
+                        <i>🔬</i>
+                        <span>Backed by Research</span>
+                    </div>
                     
+                    <div class="research-panel">
+                        <h3>Our 7 Questions Framework is Grounded in Leading Decision Science:</h3>
+                        <ul class="research-list">
+                            <li class="research-item">
+                                <i>📊</i>
+                                <div>
+                                    <strong>Hammond, Keeney & Raiffa</strong> - Harvard's acclaimed "Smart Choices" framework informs our risk assessment approach
+                                </div>
+                            </li>
+                            <li class="research-item">
+                                <i>📘</i>
+                                <div>
+                                    <strong>Heath & Heath's "Decisive"</strong> - Our questions incorporate WRAP methodology to overcome decision biases
+                                </div>
+                            </li>
+                            <li class="research-item">
+                                <i>🧠</i>
+                                <div>
+                                    <strong>Kahneman's Pre-mortem Technique</strong> - We help you anticipate obstacles before they happen
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
                     <div class="hero-buttons">
-                        <a href="https://apps.apple.com/app/7-decision-ways" class="btn-store" target="_blank">
+                        <a href="https://tally.so/r/3xg6EJ" class="btn-store" target="_blank">
                             <i>📱</i>
                             <span>App Store</span>
                         </a>
-                        <a href="https://play.google.com/store/apps/details?id=com.7decisionways" class="btn-store" target="_blank">
+                        <a href="https://tally.so/r/3xg6EJ" class="btn-store"
+                            target="_blank">
                             <i>🎮</i>
                             <span>Play Store</span>
                         </a>
                     </div>
-                    
+
                     <div class="hero-badges">
                         <div class="hero-badge">
                             <i>✨</i>
@@ -740,7 +916,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="hero-image">
                     <div class="hero-blob"></div>
                     <img src="./The-hard-choice-Home-page.png" alt="The Hard Choice App" class="phone-mockup">
@@ -748,34 +924,38 @@
             </div>
         </div>
     </section>
-    
+
     <!-- Features Section -->
     <section id="features" class="features">
         <div class="container">
             <div class="section-header">
                 <h2>Your Serene Path to Clarity</h2>
-                <p>Seven steps, grounded in research and personal journey, to ease your decisions and bring peace to your choices.</p>
+                <p>Seven steps, grounded in research and personal journey, to ease your decisions and bring peace to
+                    your choices.</p>
             </div>
-            
+
             <div class="features-grid">
                 <div class="feature-card">
                     <img src="./writing-down-problem.png" alt="Face Risks" class="feature-image">
                     <h3>Face the Risks</h3>
-                    <p>Consider challenges with care—early lessons guide this step to help you evaluate potential obstacles with a calm mind.</p>
+                    <p>Consider challenges with care—early lessons guide this step to help you evaluate potential
+                        obstacles with a calm mind.</p>
                 </div>
-                
+
                 <div class="feature-card">
                     <img src="./writing-down-risk.png" alt="Gather Your Proof" class="feature-image">
                     <h3>Gather Your Proof</h3>
-                    <p>Collect facts gently—saved from hasty choices by taking time to understand what's known and what remains uncertain.</p>
+                    <p>Collect facts gently—saved from hasty choices by taking time to understand what's known and what
+                        remains uncertain.</p>
                 </div>
-                
+
                 <div class="feature-card">
                     <img src="./success.png" alt="Picture Your wins" class="feature-image">
                     <h3>Picture Your Wins</h3>
-                    <p>Envision success with purpose—turn dreams into action by seeing the positive outcomes that await with clarity.</p>
+                    <p>Envision success with purpose—turn dreams into action by seeing the positive outcomes that await
+                        with clarity.</p>
                 </div>
-                
+
                 <!-- <div class="feature-card">
                     <div class="feature-icon">⚖️</div>
                     <h3>Weigh Your Losses</h3>
@@ -796,7 +976,7 @@
             </div>
         </div>
     </section>
-    
+
     <!-- Testimonials Section -->
     <section id="testimonials" class="testimonials">
         <div class="container testimonials-container">
@@ -804,9 +984,12 @@
                 <h2>Voices of Serenity</h2>
                 <p>Real stories reflecting the journey to clarity and confident risk-taking.</p>
             </div>
-            
+
             <div class="testimonial-card">
-                <p class="testimonial-content">"These seven steps completely transformed how I approach life's crossroads. The 'Align With Your Heart' step especially resonated with me—I finally feel confident that I'm making choices true to who I am, not what others expect. My career change felt intimidating until this framework made everything so much clearer."</p>
+                <p class="testimonial-content">"These seven steps completely transformed how I approach life's
+                    crossroads. The 'Align With Your Heart' step especially resonated with me—I finally feel confident
+                    that I'm making choices true to who I am, not what others expect. My career change felt intimidating
+                    until this framework made everything so much clearer."</p>
                 <div class="testimonial-author">
                     <div class="author-avatar"></div>
                     <div class="author-name">Ravi Sharma</div>
@@ -815,7 +998,7 @@
             </div>
         </div>
     </section>
-    
+
     <!-- CTA Section -->
     <section class="cta">
         <div class="container">
@@ -824,7 +1007,7 @@
             <a href="#download" class="btn">Download Free</a>
         </div>
     </section>
-    
+
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -834,100 +1017,21 @@
                         <div class="footer-logo-icon">7</div>
                         <span>Steps to Risk</span>
                     </div>
-                    <p class="footer-description">Guiding you to make calm, clear decisions with confidence through our simple seven-step approach.</p>
+                    <p class="footer-description">Guiding you to make calm, clear decisions with confidence through our
+                        simple seven-step approach.</p>
                 </div>
-                
-                <div class="footer-column">
-                    <h3>Learn</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Decision Guide</a></li>
-                        <li><a href="#">FAQ</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Support</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Help Center</a></li>
-                        <li><a href="#">Contact Us</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                    </ul>
-                </div>
-                
+
                 <div class="footer-column">
                     <h3>Download</h3>
                     <ul class="footer-links">
-                        <li><a href="#">iOS App</a></li>
-                        <li><a href="#">Android App</a></li>
+                        <li><a href="https://tally.so/r/3xg6EJ">iOS App</a></li>
+                        <li><a href="https://tally.so/r/3xg6EJ">Android App</a></li>
                     </ul>
                 </div>
             </div>
-            
             <div class="footer-bottom">
                 <div class="copyright">© 2025 The Hard Choice. All rights reserved.</div>
-                <div class="social-links">
-                    <a href="#" class="social-link">🐦</a>
-                    <a href="#" class="social-link">💼</a>
-                    <a href="#" class="social-link">👍</a>
-                </div>
             </div>
         </div>
     </footer>
-    
-    <script>
-        // Mobile menu toggle
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const mobileMenuCloseBtn = document.querySelector('.mobile-menu-close');
-        const mobileMenu = document.querySelector('.mobile-menu');
-        const mobileLinks = document.querySelectorAll('.mobile-nav a');
-        
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
-        
-        mobileMenuCloseBtn.addEventListener('click', () => {
-            mobileMenu.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
-        
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            });
-        });
-        
-        // Header scroll effect
-        const header = document.querySelector('header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.08)';
-                header.style.background = 'rgba(255, 255, 255, 0.98)';
-            } else {
-                header.style.boxShadow = 'none';
-                header.style.background = 'rgba(255, 255, 255, 0.9)';
-            }
-        });
-        
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-    </script>
 </body>
-</html>
