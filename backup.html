@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Hard Choice - Conquer Decisions Offline</title>
+    <style>
+        :root {
+            --primary: #1E90FF;
+            --secondary: #A3E4D7;
+            --bg-light: #F5FAFD;
+            --text-dark: #2C3E50;
+            --text-soft: #4682B4;
+            --shadow-light: 0 4px 12px rgba(30, 144, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', 'Times New Roman', sans-serif;
+        }
+
+        body {
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.75;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: background 0.3s ease;
+        }
+
+        header.scrolled {
+            background: #ffffff;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .logo:hover {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0 20px;
+        }
+
+        .nav-links li {
+            margin-left: 25px;
+        }
+
+        .nav-links li a {
+            color: var(--text-soft);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: color 0.3s ease, background 0.3s ease;
+        }
+
+        .nav-links li a:hover {
+            color: var(--primary);
+            background: rgba(30, 144, 255, 0.1);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: #187BCD;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--text-soft);
+            color: var(--text-dark);
+        }
+
+        .btn-outline:hover {
+            background: var(--secondary);
+            color: var(--text-dark);
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+                display: none;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 10px 0;
+            }
+
+            .auth-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+                background: none;
+                border: none;
+                color: var(--text-dark);
+                font-size: 28px;
+                cursor: pointer;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--bg-light), #EAF4FC);
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-content p {
+            font-size: 20px;
+            color: var(--text-soft);
+            max-width: 600px;
+            margin: 0 auto 30px;
+            font-style: italic;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .app-store-btn,
+        .play-store-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 24px;
+            border-radius: 8px;
+            background: var(--primary);
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s ease;
+            box-shadow: var(--shadow-light);
+        }
+
+        .app-store-btn:hover,
+        .play-store-btn:hover {
+            background: #187BCD;
+        }
+
+        .app-store-btn::before {
+            content: '';
+            margin-right: 8px;
+        }
+
+        .play-store-btn::before {
+            content: '▾';
+            margin-right: 8px;
+        }
+
+        .hero-image {
+            max-width: 100%;
+            height: auto;
+            margin-top: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(30, 144, 255, 0.3);
+            background: rgba(224, 247, 255, 0.5);
+            padding: 10px;
+            width: 260px;
+            border-radius: 20px;
+        }
+
+        /* Begin Wherever You Are Section */
+        .begin-section {
+            padding: 60px 0;
+            background: #ffffff;
+            text-align: center;
+        }
+
+        .begin-section h2 {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+
+        .begin-section p {
+            font-size: 18px;
+            color: var(--text-soft);
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .begin-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(30, 144, 255, 0.3);
+            background: rgba(224, 247, 255, 0.5);
+            padding: 10px;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: var(--bg-light);
+        }
+
+        .features-content h2 {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--text-dark);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .features-content p {
+            font-size: 18px;
+            color: var(--text-soft);
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h3 {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin: 15px 0 10px;
+        }
+
+        .feature-card p {
+            font-size: 16px;
+            color: var(--text-soft);
+        }
+
+        .feature-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(30, 144, 255, 0.3);
+            background: rgba(224, 247, 255, 0.5);
+            padding: 10px;
+        }
+
+        /* Question Validity Section */
+        .validity-section {
+            padding: 80px 0;
+            background: #ffffff;
+            text-align: center;
+        }
+
+        .validity-section h2 {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+
+        .validity-section p {
+            font-size: 18px;
+            color: var(--text-soft);
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .validity-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(30, 144, 255, 0.3);
+            background: rgba(224, 247, 255, 0.5);
+            padding: 10px;
+        }
+
+        /* Data Usage Section */
+        .data-section {
+            padding: 60px 0;
+            background: var(--bg-light);
+            text-align: center;
+        }
+
+        .data-section h2 {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+
+        .data-section p {
+            font-size: 18px;
+            color: var(--text-soft);
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .data-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(30, 144, 255, 0.3);
+            background: rgba(224, 247, 255, 0.5);
+            padding: 10px;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #EAF4FC, var(--bg-light));
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 38px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+
+        .cta p {
+            font-size: 20px;
+            color: var(--text-soft);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .cta .btn {
+            display: inline-block;
+            margin: 0 10px;
+        }
+
+        /* Footer */
+        footer {
+            background: #2C3E50;
+            color: #ffffff;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .footer-content p {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .social-links a {
+            color: #ffffff;
+            font-size: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 32px;
+            }
+
+            .hero-content p {
+                font-size: 16px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .app-store-btn,
+            .play-store-btn {
+                width: 100%;
+            }
+
+            .begin-section h2,
+            .validity-section h2,
+            .data-section h2,
+            .cta h2 {
+                font-size: 28px;
+            }
+
+            .begin-section p,
+            .validity-section p,
+            .data-section p,
+            .cta p {
+                font-size: 16px;
+            }
+
+            .feature-grid,
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta .btn {
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header id="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">The Hard Choice</a>
+                <button class="mobile-menu-btn"></button>
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#validity">Validity</a></li>
+                    <li><a href="#data">Data</a></li>
+                    <li><a href="#cta">Get Started</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="overlay"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 99;">
+    </div>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Conquer The Hard Choice Offline</h1>
+                <p>Navigate life’s toughest decisions with 7 expert steps, fully offline and secure.</p>
+                <div class="hero-buttons">
+                    <div>
+                        <a href="https://apps.apple.com/app/the-hard-choice" class="app-store-btn" target="_blank">App
+                            Store</a>
+                        <a href="https://play.google.com/store/apps/details?id=com.thehardchoice" class="play-store-btn"
+                            target="_blank">Play Store</a>
+                    </div>
+                </div>
+                <img src="./The-hard-choice-Home-page.png" alt="Hero Image" class="hero-image">
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="container">
+            <div class="features-content">
+                <h2>Master Your Decisions</h2>
+                <p>Seven steps to face risks and find peace, designed for the toughest moments.</p>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <img src="./writing-down-problem.png" alt="Face Risks" class="feature-image">
+                        <h3>Face the Risks</h3>
+                        <p>Assess challenges with confidence, offline.</p>
+                    </div>
+                    <div class="feature-card">
+                        <img src="./writing-down-risk.png" alt="Gather Insights" class="feature-image">
+                        <h3>Gather Insights</h3>
+                        <p>Collect facts securely without internet.</p>
+                    </div>
+                    <div class="feature-card">
+                        <img src="./success.png" alt="Envision Success" class="feature-image">
+                        <h3>Envision Success</h3>
+                        <p>Picture bold outcomes with ease.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="validity-section" id="validity">
+        <div class="container">
+            <h2>Backed by Research</h2>
+            <p>Our 7 steps are crafted from rigorous research by scholars and experts, ensuring validity and
+                effectiveness in decision-making.</p>
+            <img src="/api/placeholder/600/300" alt="Research Image" class="validity-image">
+        </div>
+    </section>
+
+    <section class="data-section" id="data">
+        <div class="container">
+            <h2>Does The Hard Choice Protect My Data?</h2>
+            <p>Use The Hard Choice with full confidence, knowing that we never share your data with third parties.</p>
+            <img src="./secure-data.png" alt="Data Protection" class="data-image">
+        </div>
+    </section>
+
+    <section class="cta" id="cta">
+        <div class="container">
+            <h2>Start Conquering Your Choices Today</h2>
+            <p>Download The Hard Choice now—completely offline, secure, and ready to guide you.</p>
+            <a href="https://apps.apple.com/app/the-hard-choice" class="btn btn-primary" target="_blank">Download
+                Now</a>
+            <a href="#features" class="btn btn-outline">Explore Features</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>© 2025 The Hard Choice. All rights reserved.</p>
+                <!-- <div class="social-links">
+                    <a href="#">🐦</a>
+                    <a href="#">💼</a>
+                    <a href="#">👍</a>
+                </div> -->
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        const overlay = document.querySelector('.overlay');
+        const header = document.querySelector('#header');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            overlay.style.display = navLinks.classList.contains('active') ? 'block' : 'none';
+        });
+
+        overlay.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+            overlay.style.display = 'none';
+        });
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+
+</html>
